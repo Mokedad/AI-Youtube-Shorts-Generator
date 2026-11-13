@@ -76,18 +76,26 @@ def _reframe_vertical(in_path: str, out_path: str, aspect_ratio: str) -> str:
 
     last_center: Optional[Tuple[int, int]] = None
     smoothing = 0.15  # how aggressively to chase a new face position
+    detect_every = 5  # Haar detection is the bottleneck; faces move slowly
+    target: Optional[Tuple[int, int]] = None
+    frame_idx = 0
     while True:
         ret, frame = cap.read()
         if not ret:
             break
 
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(40, 40))
+        faces = ()
+        if frame_idx % detect_every == 0:
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(40, 40))
+        frame_idx += 1
         if len(faces) > 0:
             # Pick the largest face — usually the speaker.
             x, y, w, h = max(faces, key=lambda f: f[2] * f[3])
-            cx = x + w // 2
-            cy = y + h // 2
+            target = (x + w // 2, y + h // 2)
+        if target is not None:
+            # Ease toward the last detected face every frame for smooth motion.
+            cx, cy = target
             if last_center is None:
                 last_center = (cx, cy)
             else:
