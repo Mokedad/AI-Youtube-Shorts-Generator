@@ -26,9 +26,11 @@ def _cut_subclip(source_path: str, start: float, end: float, out_path: str) -> s
     """ffmpeg -ss start -to end → re-encoded mp4 with audio."""
     cmd = [
         "ffmpeg", "-y", "-loglevel", "error",
-        "-i", source_path,
+        # Seek before -i (fast keyframe seek; re-encode keeps it frame-accurate)
+        # so long sources aren't decoded from the start for every clip.
         "-ss", f"{start:.3f}",
-        "-to", f"{end:.3f}",
+        "-i", source_path,
+        "-t", f"{end - start:.3f}",
         "-c:v", "libx264", "-preset", "fast", "-crf", "20",
         "-c:a", "aac", "-b:a", "128k",
         out_path,
