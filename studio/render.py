@@ -76,7 +76,7 @@ def main():
             f.write(build_ass(words, start, end, h["hook"]))
         subprocess.run([
             "ffmpeg", "-y", "-loglevel", "error", "-i", raw,
-            "-vf", f"scale=1080:1920:flags=lanczos,ass={ass}",
+            "-vf", f"scale=1080:1920:flags=lanczos,unsharp=5:5:0.7:5:5:0.0,ass={ass}",
             "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p",
             "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart", final,
         ], check=True)

@@ -39,6 +39,58 @@ def _cut_subclip(source_path: str, start: float, end: float, out_path: str) -> s
     return out_path
 
 
+
+def plan_camera_path(
+    samples: List[Tuple[int, float]],
+    n_frames: int,
+    fps: float,
+    src_w: int,
+    crop_w: int,
+) -> List[float]:
+    """Turn noisy per-frame face x-positions into a steady virtual camera path.
+
+    A face detector jitters by tens of pixels between frames and sometimes
+    fires on background clutter. Chasing it frame by frame makes the crop shake.
+    Instead: drop outliers, median-filter, then hold the camera still until the
+    face drifts outside a dead zone, and pan there slowly.
+    """
+    if n_frames <= 0:
+        return []
+    if not samples:
+        return [src_w / 2.0] * n_frames
+
+    import numpy as np
+
+    idx = np.array([f for f, _ in samples], dtype=float)
+    xs = np.array([x for _, x in samples], dtype=float)
+
+    # Drop detections far from the clip's typical face position (false positives).
+    med = np.median(xs)
+    keep = np.abs(xs - med) <= max(crop_w * 0.6, 1.0)
+    if keep.sum() >= 1:
+        idx, xs = idx[keep], xs[keep]
+
+    # Rolling median over ~1s of samples to kill jitter.
+    half = max(1, int(fps / 5 / 2))
+    xs = np.array([np.median(xs[max(0, k - half):k + half + 1]) for k in range(len(xs))])
+
+    raw = np.interp(np.arange(n_frames), idx, xs)
+
+    # Dead zone + slow ease: stay put unless the face leaves the middle of the frame.
+    dead = crop_w * 0.12
+    ease = 1.0 / max(1.0, fps * 0.6)  # ~0.6s to settle
+    lo, hi = crop_w / 2.0, src_w - crop_w / 2.0
+    pos = float(np.clip(np.median(raw[: max(1, int(fps))]), lo, hi))
+    out = []
+    for t in raw:
+        err = t - pos
+        if abs(err) > dead:
+            pos += (err - np.sign(err) * dead) * ease
+        pos = float(np.clip(pos, lo, hi))
+        out.append(pos)
+    return out
+
+
 def _reframe_vertical(in_path: str, out_path: str, aspect_ratio: str) -> str:
     """Crop the cut clip to the target aspect ratio, tracking faces if possible."""
     try:
@@ -70,49 +122,42 @@ def _reframe_vertical(in_path: str, out_path: str, aspect_ratio: str) -> str:
 
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
-    silent_path = out_path + ".silent.mp4"
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-    writer = cv2.VideoWriter(silent_path, fourcc, fps, (crop_w, crop_h))
-
-    last_center: Optional[Tuple[int, int]] = None
-    smoothing = 0.15  # how aggressively to chase a new face position
-    detect_every = 5  # Haar detection is the bottleneck; faces move slowly
-    target: Optional[Tuple[int, int]] = None
-    frame_idx = 0
+    # Pass 1: sample face positions across the whole clip.
+    detect_every = 5
+    scale = 480.0 / src_h if src_h > 480 else 1.0  # detect on a small copy: faster, same result
+    samples: List[Tuple[int, float]] = []
+    n_frames = 0
     while True:
         ret, frame = cap.read()
         if not ret:
             break
+        if n_frames % detect_every == 0:
+            small = cv2.resize(frame, None, fx=scale, fy=scale) if scale != 1.0 else frame
+            gray = cv2.cvtColor(small, cv2.COLOR_BGR2GRAY)
+            min_side = max(24, int(gray.shape[0] * 0.08))
+            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=6, minSize=(min_side, min_side))
+            if len(faces) > 0:
+                x, _, w, _ = max(faces, key=lambda f: f[2] * f[3])
+                samples.append((n_frames, (x + w / 2) / scale))
+        n_frames += 1
+    cap.release()
 
-        faces = ()
-        if frame_idx % detect_every == 0:
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(40, 40))
-        frame_idx += 1
-        if len(faces) > 0:
-            # Pick the largest face — usually the speaker.
-            x, y, w, h = max(faces, key=lambda f: f[2] * f[3])
-            target = (x + w // 2, y + h // 2)
-        if target is not None:
-            # Ease toward the last detected face every frame for smooth motion.
-            cx, cy = target
-            if last_center is None:
-                last_center = (cx, cy)
-            else:
-                lx, ly = last_center
-                last_center = (
-                    int(lx + (cx - lx) * smoothing),
-                    int(ly + (cy - ly) * smoothing),
-                )
-        if last_center is None:
-            last_center = (src_w // 2, src_h // 2)
+    path = plan_camera_path(samples, n_frames, fps, src_w, crop_w)
 
-        cx, cy = last_center
-        x0 = max(0, min(src_w - crop_w, cx - crop_w // 2))
-        y0 = max(0, min(src_h - crop_h, cy - crop_h // 2))
-        cropped = frame[y0:y0 + crop_h, x0:x0 + crop_w]
-        writer.write(cropped)
-
+    # Pass 2: write the crops along the planned (stable) path.
+    cap = cv2.VideoCapture(in_path)
+    silent_path = out_path + ".silent.mp4"
+    writer = cv2.VideoWriter(silent_path, cv2.VideoWriter_fourcc(*"mp4v"), fps, (crop_w, crop_h))
+    y0 = max(0, (src_h - crop_h) // 2)
+    i = 0
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+        cx = path[min(i, len(path) - 1)] if path else src_w / 2
+        x0 = int(round(max(0, min(src_w - crop_w, cx - crop_w / 2))))
+        writer.write(frame[y0:y0 + crop_h, x0:x0 + crop_w])
+        i += 1
     cap.release()
     writer.release()
 
