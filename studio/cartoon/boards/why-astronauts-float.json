@@ -1,0 +1,20 @@
+{
+  "title": "Why do astronauts float?",
+  "voice": "am_michael", "speed": 1.08,
+  "lines": [
+    {"say": "Astronauts don't float because there's no gravity. That's a myth!",
+     "scene": {"type": "hero", "sprite": "astronaut", "title": "NO GRAVITY IN SPACE?", "stamp": "MYTH!", "stamp_at": 0.65}},
+    {"say": "Up where the space station flies, gravity is still about ninety percent as strong as down here.",
+     "scene": {"type": "counter", "from": 0, "to": 90, "suffix": "%", "label": "GRAVITY UP THERE", "sprite": "iss", "scale": 1.0}},
+    {"say": "So why do they float? Imagine throwing a ball. It curves, and falls to the ground.",
+     "scene": {"type": "cannon", "stage": "short"}},
+    {"say": "Throw it faster, and it lands further away.",
+     "scene": {"type": "cannon", "stage": "mid"}},
+    {"say": "Now throw it insanely fast. Twenty-eight thousand kilometres an hour. The ground curves away as fast as the ball falls. It never lands. That's an orbit!",
+     "scene": {"type": "cannon", "stage": "orbit", "title": "28,000 km/h", "title_yellow": true}},
+    {"say": "The space station, and everyone inside it, is falling around the Earth, nonstop.",
+     "scene": {"type": "station_orbit", "title": "FALLING... FOREVER"}},
+    {"say": "Follow for more space secrets.",
+     "scene": {"type": "outro"}}
+  ]
+}

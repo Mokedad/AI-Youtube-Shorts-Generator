@@ -1,0 +1,22 @@
+{
+  "title": "What happens if you open your helmet in space?",
+  "voice": "am_michael", "speed": 1.08,
+  "lines": [
+    {"say": "What happens if you open your helmet in space? Do you explode?",
+     "scene": {"type": "hero", "sprite": "astronaut", "title": "OPEN YOUR HELMET IN SPACE?", "stamp": "BOOM?", "stamp_at": 0.75, "stamp_color": "yellow"}},
+    {"say": "Good news. You don't explode. Your skin is tough enough to hold you together.",
+     "scene": {"type": "bigtext", "text": "YOU DON'T EXPLODE", "sprite": "check", "scale": 1.1}},
+    {"say": "The bad news? With no oxygen, you'd have about fifteen seconds before you pass out.",
+     "scene": {"type": "counter", "from": 0, "to": 15, "suffix": " sec", "label": "UNTIL YOU PASS OUT", "sprite": "clock", "scale": 0.9}},
+    {"say": "The spit on your tongue would start to bubble and boil, because the pressure is so low.",
+     "scene": {"type": "hero", "sprite": "water", "title": "YOUR SPIT BOILS", "scale": 1.2, "title_yellow": true, "fx": "bubbles"}},
+    {"say": "And never hold your breath. The air in your lungs would expand and hurt them.",
+     "scene": {"type": "hero", "sprite": "astronaut", "title": "DON'T HOLD YOUR BREATH", "stamp": "BREATHE OUT!", "stamp_at": 0.5, "stamp_color": "yellow"}},
+    {"say": "But if you're pulled back inside within about ninety seconds, you'd probably survive.",
+     "scene": {"type": "counter", "from": 0, "to": 90, "suffix": " sec", "label": "TO GET RESCUED", "sprite": "check", "scale": 0.9}},
+    {"say": "This really happened. In 1966, a NASA test suit leaked inside a vacuum chamber. The engineer passed out in about fifteen seconds, and woke up just fine.",
+     "scene": {"type": "hero", "sprite": "astronaut", "title": "THIS REALLY HAPPENED", "fx": "sparkles", "stamp": "1966", "stamp_at": 0.3, "stamp_color": "yellow"}},
+    {"say": "Follow for more space secrets.",
+     "scene": {"type": "outro"}}
+  ]
+}
