@@ -303,7 +303,22 @@ def sp_mark(ok):
     return sprite_canvas(300, 300, fn)
 
 
+def sp_car():
+    """Generic cartoon sports car (no real-world or game design)."""
+    def fn(d, k):
+        d.polygon([(30*k,170*k),(60*k,120*k),(170*k,105*k),(250*k,55*k),(380*k,55*k),(450*k,115*k),
+                   (560*k,130*k),(590*k,170*k),(590*k,210*k),(30*k,210*k)], fill=(255,80,80), outline=INK, width=8*k)
+        d.polygon([(262*k,70*k),(370*k,70*k),(420*k,115*k),(215*k,115*k)], fill=(150,215,255), outline=INK, width=6*k)
+        d.line([318*k,70*k,318*k,115*k], fill=INK, width=6*k)
+        d.rectangle([540*k,150*k,585*k,170*k], fill=(255,230,120), outline=INK, width=4*k)
+        for x in (140, 470):
+            d.ellipse([(x-55)*k,155*k,(x+55)*k,265*k], fill=(40,40,55), outline=INK, width=7*k)
+            d.ellipse([(x-25)*k,185*k,(x+25)*k,235*k], fill=(200,200,215), outline=INK, width=5*k)
+    return sprite_canvas(620, 280, fn)
+
+
 SPRITE_FACTORIES = {
+    "car": sp_car,
     "astronaut": sp_astronaut,
     "earth": lambda: sp_earth(1, 250),
     "earth_big": lambda: sp_earth(1, 520),
