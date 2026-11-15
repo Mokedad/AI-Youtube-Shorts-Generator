@@ -548,6 +548,7 @@ def sc_outro(frame, d, lt, dur, spec):
     paste(frame, S("earth"), W / 2, CY + 30, scale=0.85 * pop(lt, 0.5))
     d.ellipse([W / 2 - 470, CY + 30 - 130, W / 2 + 470, CY + 30 + 130], outline=YELLOW, width=16)
     paste(frame, T(spec.get("brand", "ORBIT CLIPS"), 120), W / 2, TITLE_Y, scale=pop(lt - 0.2, 0.4))
+    paste(frame, T("FOLLOW FOR MORE", 70, YELLOW, 10), W / 2, CY + 330, scale=pop(lt - 0.35, 0.35))
 
 
 SCENES = {"hero": sc_hero, "counter": sc_counter, "versus": sc_versus, "list": sc_list,
@@ -585,7 +586,11 @@ def render(board_path, out):
     wav = os.path.join(work, "voice.wav")
     spans, total = synth([ln["say"] for ln in lines], board.get("voice", "am_michael"), board.get("speed", 1.08), wav)
     words = transcribe_words(wav)
-    dur = total + 0.5
+    dur = total + 0.3
+    if board.get("outro", True):  # silent branded end card: no narration time spent on "follow"
+        lines = lines + [{"say": "", "scene": {"type": "outro"}}]
+        spans = spans + [(dur, dur + 1.3)]
+        dur += 1.3
 
     bg = background()
     cannon = Cannon()

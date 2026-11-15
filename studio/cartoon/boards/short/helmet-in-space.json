@@ -1,0 +1,11 @@
+{"title": "What happens if you open your helmet in space?", "voice": "am_michael", "speed": 1.12,
+ "lines": [
+  {"say": "Open your helmet in space? Good news. You would not explode.",
+   "scene": {"type": "hero", "sprite": "astronaut", "title": "OPEN YOUR HELMET IN SPACE?", "stamp": "NO BOOM", "stamp_at": 0.6, "stamp_color": "yellow"}},
+  {"say": "Bad news. With no oxygen, you'd pass out in about fifteen seconds.",
+   "scene": {"type": "counter", "from": 0, "to": 15, "suffix": " sec", "label": "UNTIL YOU PASS OUT", "sprite": "clock", "scale": 0.9}},
+  {"say": "And the spit on your tongue would start to boil.",
+   "scene": {"type": "hero", "sprite": "water", "title": "YOUR SPIT BOILS", "scale": 1.2, "title_yellow": true, "fx": "bubbles"}},
+  {"say": "Get back inside within about ninety seconds, and you'd probably survive.",
+   "scene": {"type": "counter", "from": 0, "to": 90, "suffix": " sec", "label": "TO GET RESCUED", "sprite": "check", "scale": 0.9}}
+ ]}
