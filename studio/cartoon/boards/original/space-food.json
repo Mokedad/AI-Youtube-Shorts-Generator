@@ -1,0 +1,73 @@
+{
+ "src": "hoburg",
+ "start": 383.0,
+ "end": 436.5,
+ "segments": [
+  {
+   "kind": "live",
+   "dur": 15.0
+  },
+  {
+   "kind": "cartoon",
+   "dur": 12.0,
+   "scene": {
+    "type": "exseq",
+    "title": "",
+    "phases": [
+     {
+      "move": "show",
+      "sprite": "check",
+      "dur": 4.4,
+      "label": "A SCIENCE STUDY"
+     },
+     {
+      "move": "show",
+      "sprite": "fish",
+      "dur": 4.1,
+      "label": "MORE FISH"
+     },
+     {
+      "move": "show",
+      "sprite": "astronaut",
+      "dur": 3.5,
+      "label": "BODY ADAPTS"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "live",
+   "dur": 15.0
+  },
+  {
+   "kind": "cartoon",
+   "dur": 11.5,
+   "scene": {
+    "type": "exseq",
+    "title": "",
+    "phases": [
+     {
+      "move": "show",
+      "sprite": "pouch",
+      "dur": 6.4,
+      "label": "BROCCOLI & CHEESE"
+     },
+     {
+      "move": "show",
+      "sprite": "water",
+      "dur": 4.3,
+      "label": "ADD HOT WATER",
+      "fx": "bubbles"
+     },
+     {
+      "move": "show",
+      "sprite": "pouch",
+      "dur": 0.8,
+      "label": "READY!",
+      "anim": "pulse"
+     }
+    ]
+   }
+  }
+ ]
+}

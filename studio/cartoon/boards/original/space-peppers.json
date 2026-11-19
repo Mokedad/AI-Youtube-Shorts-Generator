@@ -1,0 +1,80 @@
+{
+ "src": "vandehei",
+ "start": 737.3,
+ "end": 790.8,
+ "segments": [
+  {
+   "kind": "live",
+   "dur": 15.0
+  },
+  {
+   "kind": "cartoon",
+   "dur": 12.0,
+   "scene": {
+    "type": "exseq",
+    "title": "",
+    "phases": [
+     {
+      "move": "show",
+      "sprite": "plant",
+      "dur": 2.2,
+      "label": "SPACE GARDEN"
+     },
+     {
+      "move": "show",
+      "sprite": "pepper",
+      "dur": 2.3,
+      "label": "CHILI PEPPERS"
+     },
+     {
+      "move": "show",
+      "sprite": "astronaut",
+      "dur": 2.8,
+      "label": "HIS FAVOURITE"
+     },
+     {
+      "move": "show",
+      "sprite": "plant",
+      "dur": 4.7,
+      "label": "PLANT HABITAT",
+      "anim": "pulse"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "live",
+   "dur": 15.0
+  },
+  {
+   "kind": "cartoon",
+   "dur": 11.5,
+   "scene": {
+    "type": "exseq",
+    "title": "",
+    "phases": [
+     {
+      "move": "show",
+      "sprite": "plant",
+      "dur": 4.1,
+      "label": "THE SMELL!",
+      "fx": "sparkles"
+     },
+     {
+      "move": "show",
+      "sprite": "pepper",
+      "dur": 2.9,
+      "label": "THEY ATE THEM!",
+      "anim": "pulse"
+     },
+     {
+      "move": "show",
+      "sprite": "check",
+      "dur": 4.5,
+      "label": "HUGE BONUS"
+     }
+    ]
+   }
+  }
+ ]
+}

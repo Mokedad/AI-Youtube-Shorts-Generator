@@ -372,7 +372,52 @@ def sp_barbell():
     return sprite_canvas(520, 160, fn)
 
 
+
+def sp_plant():
+    def fn(d, k):
+        d.polygon([(110*k,300*k),(290*k,300*k),(265*k,420*k),(135*k,420*k)], fill=(200,110,70), outline=INK, width=8*k)
+        d.line([200*k,300*k,200*k,120*k], fill=(60,150,80), width=12*k)
+        for x,y,a in [(140,200,-1),(260,170,1),(150,130,-1),(250,240,1)]:
+            d.ellipse([(x-45)*k,(y-22)*k,(x+45)*k,(y+22)*k], fill=(90,200,110), outline=INK, width=6*k)
+        for x,y in [(175,250),(235,205)]:
+            d.polygon([(x*k,y*k),((x+14)*k,(y+10)*k),((x+4)*k,(y+60)*k),((x-8)*k,(y+12)*k)], fill=(230,50,40), outline=INK, width=5*k)
+    return sprite_canvas(400, 440, fn)
+
+
+def sp_pepper():
+    def fn(d, k):
+        pts=[(80*k,90*k),(150*k,70*k),(300*k,160*k),(340*k,300*k),(300*k,320*k),(200*k,200*k),(90*k,150*k)]
+        d.polygon(pts, fill=(230,50,40), outline=INK, width=9*k)
+        d.line([80*k,90*k,40*k,40*k], fill=(60,150,80), width=16*k)
+        d.ellipse([60*k,70*k,120*k,130*k], fill=(60,150,80), outline=INK, width=6*k)
+        d.line([160*k,110*k,250*k,170*k], fill=(255,150,140), width=10*k)
+    return sprite_canvas(380, 360, fn)
+
+
+def sp_fish():
+    def fn(d, k):
+        d.ellipse([60*k,80*k,320*k,240*k], fill=(90,170,230), outline=INK, width=9*k)
+        d.polygon([(300*k,160*k),(400*k,80*k),(400*k,240*k)], fill=(70,140,210), outline=INK, width=9*k)
+        d.ellipse([110*k,130*k,145*k,165*k], fill=INK)
+        d.arc([170*k,100*k,260*k,220*k], 260, 100, fill=(40,100,170), width=6*k)
+    return sprite_canvas(420, 320, fn)
+
+
+def sp_pouch():
+    def fn(d, k):
+        d.rounded_rectangle([90*k,60*k,310*k,420*k], radius=26*k, fill=(220,225,235), outline=INK, width=9*k)
+        d.rectangle([90*k,60*k,310*k,110*k], fill=(170,175,190), outline=INK, width=7*k)
+        d.rounded_rectangle([125*k,170*k,275*k,300*k], radius=14*k, fill=(110,190,110), outline=INK, width=6*k)
+        d.ellipse([150*k,195*k,250*k,275*k], fill=(255,214,90))
+        d.rectangle([185*k,20*k,215*k,70*k], fill=(80,170,255), outline=INK, width=5*k)
+    return sprite_canvas(400, 440, fn)
+
+
 SPRITE_FACTORIES = {
+    "plant": sp_plant,
+    "pepper": sp_pepper,
+    "fish": sp_fish,
+    "pouch": sp_pouch,
     "bench": sp_bench,
     "barbell": sp_barbell,
     "bike": sp_bike,
@@ -501,11 +546,39 @@ def draw_phase(frame, d, move, lt, label):
         paste(frame, T(label, 84, YELLOW, 10), W / 2, CY + 370, scale=pop(lt - 0.2, 0.35))
 
 
+
+def draw_show(frame, d, ph, lt):
+    """Generic beat: one object (plus optional badge/fx) that visually names what is said."""
+    anim = ph.get("anim", "bob")
+    sc = ph.get("scale", 1.2) * pop(lt, 0.35)
+    x, y = W / 2, CY + 60
+    ang = 0
+    if anim == "bob":
+        y += math.sin(lt * 2.4) * 24
+        ang = math.sin(lt * 1.6) * 5
+    elif anim == "rise":
+        y = CY + 260 - smooth(lt / 3.0) * 420
+    elif anim == "pulse":
+        sc *= 1 + 0.06 * math.sin(lt * 7)
+    paste(frame, S(ph["sprite"]), x, y, scale=sc, angle=ang)
+    if anim == "rise":
+        paste(frame, sp_flame_cached(), x, y + 290 * sc / 1.2, scale=sc * (1 + 0.12 * math.sin(lt * 40)))
+    if ph.get("fx"):
+        fx(d, ph["fx"], lt, x, y)
+    if ph.get("badge"):
+        paste(frame, S(ph["badge"]), x + 230, y - 180, scale=0.5 * pop(lt - 0.4, 0.3))
+    if ph.get("label"):
+        paste(frame, T(ph["label"], 84, YELLOW, 10), W / 2, CY + 370, scale=pop(lt - 0.15, 0.35))
+
+
 def sc_exseq(frame, d, lt, dur, spec):
     t = lt
     for ph in spec["phases"]:
         if t < ph["dur"]:
-            draw_phase(frame, d, ph["move"], t, ph.get("label"))
+            if ph["move"] == "show":
+                draw_show(frame, d, ph, t)
+            else:
+                draw_phase(frame, d, ph["move"], t, ph.get("label"))
             break
         t -= ph["dur"]
     scene_title(frame, spec, lt)

@@ -1,0 +1,75 @@
+{
+ "src": "hoburg",
+ "start": 811.5,
+ "end": 865.0,
+ "segments": [
+  {
+   "kind": "live",
+   "dur": 15.0
+  },
+  {
+   "kind": "cartoon",
+   "dur": 12.0,
+   "scene": {
+    "type": "exseq",
+    "title": "",
+    "phases": [
+     {
+      "move": "show",
+      "sprite": "rocket",
+      "dur": 3.3,
+      "label": "LAUNCH SCRUBBED",
+      "badge": "cross"
+     },
+     {
+      "move": "show",
+      "sprite": "rocket",
+      "dur": 4.4,
+      "label": "TWO NIGHT LAUNCHES",
+      "badge": "star"
+     },
+     {
+      "move": "show",
+      "sprite": "check",
+      "dur": 4.3,
+      "label": "FELT PREPARED"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "live",
+   "dur": 15.0
+  },
+  {
+   "kind": "cartoon",
+   "dur": 11.5,
+   "scene": {
+    "type": "exseq",
+    "title": "",
+    "phases": [
+     {
+      "move": "show",
+      "sprite": "rocket",
+      "dur": 4.4,
+      "label": "GIANT ROCKET",
+      "anim": "rise"
+     },
+     {
+      "move": "show",
+      "sprite": "star",
+      "dur": 2.6,
+      "label": "ADVENTURE",
+      "fx": "sparkles"
+     },
+     {
+      "move": "show",
+      "sprite": "astronaut",
+      "dur": 4.5,
+      "label": "SOMETHING NEW"
+     }
+    ]
+   }
+  }
+ ]
+}
