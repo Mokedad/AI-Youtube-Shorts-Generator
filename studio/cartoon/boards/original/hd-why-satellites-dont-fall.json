@@ -1,0 +1,8 @@
+{"voice": "am_michael", "speed": 1.08, "lines": [
+ {"say": "A satellite in orbit isn't floating. It's constantly falling.", "beat": "hook", "header": "WHY DON'T SATELLITES FALL?"},
+ {"say": "Gravity pulls it down, toward Earth.", "beat": "gravity", "header": "CONSTANT FALL"},
+ {"say": "But it moves sideways so fast, the ground keeps curving away beneath it.", "beat": "speed", "header": "GRAVITY VS. SPEED"},
+ {"say": "A satellite in a lower orbit has to move even faster.", "beat": "dual", "header": "HIGH VS. LOW ORBIT"},
+ {"say": "And it skims the thin upper air, which slowly drags it down.", "beat": "drag", "header": "DRAG & VELOCITY"},
+ {"say": "Every orbit is a balance between speed and gravity's pull.", "beat": "payoff", "header": "ORBITAL BALANCE"}
+]}
