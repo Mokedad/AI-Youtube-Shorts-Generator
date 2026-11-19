@@ -1,0 +1,41 @@
+{
+ "voice": "am_michael",
+ "speed": 1.12,
+ "lines": [
+  {
+   "say": "The footprints left on the Moon by Apollo astronauts are still there today.",
+   "scene": {
+    "type": "hero",
+    "sprite": "moon",
+    "title": "STILL THERE TODAY"
+   }
+  },
+  {
+   "say": "The Moon has no wind and no rain, so nothing washes or blows them away.",
+   "scene": {
+    "type": "bigtext",
+    "text": "NO WIND. NO RAIN.",
+    "sprite": "astronaut",
+    "scale": 0.7
+   }
+  },
+  {
+   "say": "That means they could last for millions of years.",
+   "scene": {
+    "type": "bigtext",
+    "text": "MILLIONS OF YEARS",
+    "sprite": "clock",
+    "scale": 0.9
+   }
+  },
+  {
+   "say": "Follow along, and see space in a different way.",
+   "scene": {
+    "type": "bigtext",
+    "text": "FOLLOW FOR MORE",
+    "sprite": "star",
+    "scale": 0.7
+   }
+  }
+ ]
+}

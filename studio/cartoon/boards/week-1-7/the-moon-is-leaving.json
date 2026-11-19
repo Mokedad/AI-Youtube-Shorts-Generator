@@ -1,0 +1,45 @@
+{
+ "voice": "am_michael",
+ "speed": 1.12,
+ "lines": [
+  {
+   "say": "The Moon is slowly moving away from Earth.",
+   "scene": {
+    "type": "hero",
+    "sprite": "moon",
+    "title": "THE MOON IS LEAVING US"
+   }
+  },
+  {
+   "say": "Its gravity pulls on our oceans, and that tugs energy from Earth's spin.",
+   "scene": {
+    "type": "bigtext",
+    "text": "TIDES PULL ENERGY",
+    "sprite": "water",
+    "scale": 0.8
+   }
+  },
+  {
+   "say": "As a result, the Moon drifts away by about three point eight centimetres every year.",
+   "scene": {
+    "type": "counter",
+    "from": 0,
+    "to": 3.8,
+    "format": "{:.1f}",
+    "suffix": " cm",
+    "label": "MOON DRIFTS AWAY EVERY YEAR",
+    "sprite": "moon",
+    "scale": 0.8
+   }
+  },
+  {
+   "say": "A day is getting longer too, but only by a tiny amount.",
+   "scene": {
+    "type": "hero",
+    "sprite": "earth",
+    "title": "LONGER DAYS",
+    "scale": 0.9
+   }
+  }
+ ]
+}

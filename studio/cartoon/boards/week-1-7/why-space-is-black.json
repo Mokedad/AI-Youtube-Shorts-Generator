@@ -1,0 +1,5 @@
+{"voice":"am_michael","speed":1.12,"lines":[
+{"say":"Why is space black, if the Sun is so bright?","scene":{"type":"hero","sprite":"sun","scale":0.8,"title":"WHY IS SPACE BLACK?"}},
+{"say":"On Earth, air scatters sunlight and makes the sky blue.","scene":{"type":"bigtext","text":"AIR SCATTERS LIGHT","sprite":"astronaut","scale":0.7}},
+{"say":"In space there is no air, so nothing scatters the light.","scene":{"type":"hero","sprite":"astronaut","title":"NO AIR. NO SCATTER.","stamp":"BLACK","stamp_at":0.5,"stamp_color":"yellow"}},
+{"say":"So the sky looks black, even in full sunlight.","scene":{"type":"bigtext","text":"SPACE IS BLACK","sprite":"star","scale":0.9}}]}

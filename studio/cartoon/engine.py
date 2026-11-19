@@ -317,7 +317,67 @@ def sp_car():
     return sprite_canvas(620, 280, fn)
 
 
+
+def sp_bike():
+    def fn(d, k):
+        for cx in (130, 390):
+            d.ellipse([(cx-95)*k, 190*k, (cx+95)*k, 380*k], outline=INK, width=16*k)
+            d.ellipse([(cx-80)*k, 205*k, (cx+80)*k, 365*k], outline=(90,200,255), width=8*k)
+            for ang in range(0, 360, 45):
+                import math as _m
+                x = cx + 75 * _m.cos(_m.radians(ang)); y = 285 + 75 * _m.sin(_m.radians(ang))
+                d.line([cx*k, 285*k, x*k, y*k], fill=(90,200,255), width=5*k)
+        d.line([130*k, 285*k, 260*k, 150*k, 390*k, 285*k], fill=(255,90,90), width=18*k)
+        d.line([260*k, 150*k, 230*k, 285*k, 130*k, 285*k], fill=(255,90,90), width=14*k)
+        d.line([250*k, 135*k, 290*k, 115*k], fill=INK, width=14*k)
+        d.line([380*k, 150*k, 410*k, 150*k], fill=INK, width=12*k)
+    return sprite_canvas(520, 400, fn)
+
+
+def sp_treadmill():
+    def fn(d, k):
+        d.polygon([(40*k,300*k),(480*k,300*k),(520*k,340*k),(0,340*k)], fill=(70,70,90), outline=INK, width=8*k)
+        d.rounded_rectangle([60*k,260*k,460*k,300*k], radius=12*k, fill=(40,40,55), outline=INK, width=6*k)
+        d.line([430*k,260*k,440*k,80*k], fill=INK, width=14*k)
+        d.rounded_rectangle([380*k,40*k,470*k,90*k], radius=10*k, fill=(255,214,40), outline=INK, width=6*k)
+    return sprite_canvas(520, 360, fn)
+
+
+def sp_weights():
+    def fn(d, k):
+        d.rounded_rectangle([60*k,120*k,460*k,170*k], radius=20*k, fill=(160,160,175), outline=INK, width=8*k)
+        for x in (40, 440):
+            d.rounded_rectangle([(x-20)*k,60*k,(x+40)*k,230*k], radius=14*k, fill=(60,60,80), outline=INK, width=8*k)
+        d.rounded_rectangle([200*k,250*k,320*k,320*k], radius=16*k, fill=(200,80,80), outline=INK, width=6*k)
+        d.line([260*k,250*k,260*k,120*k], fill=(120,220,255), width=10*k)
+    return sprite_canvas(500, 340, fn)
+
+
+def sp_running_astro():
+    return sp_astronaut()
+
+def sp_bench():
+    def fn(d, k):
+        d.rounded_rectangle([40*k,250*k,480*k,290*k], radius=14*k, fill=(90,90,110), outline=INK, width=8*k)
+        d.rectangle([120*k,290*k,150*k,360*k], fill=(60,60,80), outline=INK, width=6*k)
+        d.rectangle([370*k,290*k,400*k,360*k], fill=(60,60,80), outline=INK, width=6*k)
+    return sprite_canvas(520, 380, fn)
+
+
+def sp_barbell():
+    def fn(d, k):
+        d.rounded_rectangle([0*k,70*k,520*k,90*k], radius=8*k, fill=(170,170,185), outline=INK, width=5*k)
+        for x in (30, 60, 460, 490):
+            d.rounded_rectangle([(x-14)*k,30*k,(x+14)*k,130*k], radius=8*k, fill=(200,80,80), outline=INK, width=5*k)
+    return sprite_canvas(520, 160, fn)
+
+
 SPRITE_FACTORIES = {
+    "bench": sp_bench,
+    "barbell": sp_barbell,
+    "bike": sp_bike,
+    "treadmill": sp_treadmill,
+    "weights": sp_weights,
     "car": sp_car,
     "astronaut": sp_astronaut,
     "earth": lambda: sp_earth(1, 250),
@@ -404,6 +464,52 @@ def fx(d, kind, lt, cx, cy):
             r = 6 + 10 * a
             d.polygon([(x, y - r * 2), (x + r * 0.5, y), (x, y + r * 2), (x - r * 0.5, y)], fill=(255, 230, 120, int(255 * a)))
             d.polygon([(x - r * 2, y), (x, y + r * 0.5), (x + r * 2, y), (x, y - r * 0.5)], fill=(255, 230, 120, int(255 * a)))
+
+
+def draw_phase(frame, d, move, lt, label):
+    """Original astronaut doing a drawn exercise; lt is time into the phase."""
+    ph = math.sin(lt * 3.0)
+    if move == "squat":
+        sy = 0.62 + 0.38 * (0.5 + 0.5 * ph)
+        a = S("astronaut")
+        a = a.resize((int(a.width * 0.95), int(a.height * 0.95 * sy)), Image.BILINEAR)
+        frame.alpha_composite(a, (int(W / 2 - a.width / 2), int(CY + 160 - a.height / 2 + 120 * (1 - sy))))
+    elif move == "bench":
+        frame.alpha_composite(S("bench"), (int(W / 2 - 260), int(CY + 40)))
+        lift = 90 * (0.5 + 0.5 * ph)
+        paste(frame, S("barbell"), W / 2, CY - 40 - lift, scale=0.9)
+        a = S("astronaut").rotate(90, resample=Image.BICUBIC, expand=True)
+        a = a.resize((int(a.width * 0.85), int(a.height * 0.85)), Image.BILINEAR)
+        frame.alpha_composite(a, (int(W / 2 - a.width / 2), int(CY + 60 - a.height / 2 + 40)))
+    elif move == "bike":
+        paste(frame, S("bike"), W / 2 + 80, CY + 150, scale=1.0)
+        paste(frame, S("astronaut"), W / 2 - 150, CY - 40 + math.sin(lt * 4) * 14, scale=0.85)
+    elif move == "treadmill":
+        paste(frame, S("treadmill"), W / 2, CY + 200, scale=1.3)
+        paste(frame, S("astronaut"), W / 2 - 40, CY - 40 + abs(math.sin(lt * 9)) * 14, scale=0.8)
+    elif move == "broken":
+        paste(frame, S("treadmill"), W / 2, CY + 200, scale=1.3, angle=-6)
+        paste(frame, T("!", 200, RED, 12), W / 2 + 200, CY - 60, scale=pop(lt, 0.3))
+    elif move == "deadlift":
+        bar_y = CY + 200 - 180 * smooth(0.5 + 0.5 * ph)
+        paste(frame, S("barbell"), W / 2, bar_y, scale=1.0)
+        paste(frame, S("astronaut"), W / 2, CY + 60, scale=0.8 + 0.1 * (0.5 + 0.5 * ph))
+    elif move == "machine":
+        paste(frame, S("weights"), W / 2 + 60, CY + 160, scale=1.1)
+        paste(frame, S("astronaut"), W / 2 - 200, CY - 40 + math.sin(lt * 3) * 10, scale=0.8)
+    if label:
+        paste(frame, T(label, 84, YELLOW, 10), W / 2, CY + 370, scale=pop(lt - 0.2, 0.35))
+
+
+def sc_exseq(frame, d, lt, dur, spec):
+    t = lt
+    for ph in spec["phases"]:
+        if t < ph["dur"]:
+            draw_phase(frame, d, ph["move"], t, ph.get("label"))
+            break
+        t -= ph["dur"]
+    scene_title(frame, spec, lt)
+
 
 
 def sc_hero(frame, d, lt, dur, spec):
@@ -566,7 +672,22 @@ def sc_outro(frame, d, lt, dur, spec):
     paste(frame, T("FOLLOW FOR MORE", 70, YELLOW, 10), W / 2, CY + 330, scale=pop(lt - 0.35, 0.35))
 
 
-SCENES = {"hero": sc_hero, "counter": sc_counter, "versus": sc_versus, "list": sc_list,
+
+def sc_demo(frame, d, lt, dur, spec):
+    """Original drawn demo: astronaut doing an exercise with a prop, floating and bobbing."""
+    prop = S(spec.get("prop", "bike"))
+    paste(frame, prop, W / 2 + 90, CY + 130, scale=spec.get("prop_scale", 0.9) * pop(lt, 0.4))
+    bob = math.sin(lt * 2.4) * 40
+    lean = math.sin(lt * 2.4) * 10
+    paste(frame, S("astronaut"), W / 2 - 130, CY - 40 + bob, scale=0.85 * pop(lt - 0.1, 0.45), angle=lean)
+    if spec.get("label"):
+        paste(frame, T(spec["label"], 80, YELLOW, 10), W / 2, CY + 330, scale=pop(lt - 0.3, 0.35))
+    scene_title(frame, spec, lt)
+
+
+SCENES = {
+    "exseq": sc_exseq,
+    "demo": sc_demo,"hero": sc_hero, "counter": sc_counter, "versus": sc_versus, "list": sc_list,
           "bigtext": sc_bigtext, "station_orbit": sc_station_orbit, "rocket": sc_rocket, "outro": sc_outro}
 
 

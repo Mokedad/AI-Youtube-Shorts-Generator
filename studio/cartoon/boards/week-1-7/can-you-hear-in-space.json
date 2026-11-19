@@ -1,0 +1,5 @@
+{"voice":"am_michael","speed":1.12,"lines":[
+{"say":"Can you hear anything in space?","scene":{"type":"hero","sprite":"astronaut","title":"CAN YOU HEAR IN SPACE?"}},
+{"say":"Sound is a wave that needs air or another material to travel through.","scene":{"type":"bigtext","text":"SOUND NEEDS MATTER","sprite":"water","scale":0.8}},
+{"say":"Space is almost empty, so there is nothing for sound to travel through.","scene":{"type":"hero","sprite":"astronaut","title":"SPACE IS EMPTY","stamp":"SILENCE","stamp_at":0.5,"stamp_color":"yellow"}},
+{"say":"That's why space is completely silent.","scene":{"type":"bigtext","text":"TOTALLY SILENT","sprite":"check","scale":0.9}}]}

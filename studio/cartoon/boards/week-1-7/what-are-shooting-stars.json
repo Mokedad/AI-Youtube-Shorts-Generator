@@ -1,0 +1,5 @@
+{"voice":"am_michael","speed":1.12,"lines":[
+{"say":"Shooting stars aren't stars at all.","scene":{"type":"hero","sprite":"star","title":"NOT REALLY STARS"}},
+{"say":"Most are tiny rock grains, often smaller than a grain of sand.","scene":{"type":"bigtext","text":"SAND-SIZED ROCKS","sprite":"asteroid","scale":0.7}},
+{"say":"They burn up in the air, and that bright streak is just friction.","scene":{"type":"hero","sprite":"rocket","title":"BURNING UP","scale":0.8,"fx":"sparkles"}},
+{"say":"Make a wish, because you just watched a rock disappear.","scene":{"type":"bigtext","text":"MAKE A WISH","sprite":"check","scale":0.8}}]}

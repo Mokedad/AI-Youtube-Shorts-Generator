@@ -1,0 +1,5 @@
+{"voice":"am_michael","speed":1.12,"lines":[
+{"say":"Astronauts actually get taller in space.","scene":{"type":"hero","sprite":"astronaut","title":"ASTRONAUTS GET TALLER","scale":1.4}},
+{"say":"On Earth, gravity squeezes the spine all day long.","scene":{"type":"bigtext","text":"GRAVITY SQUEEZES YOU","sprite":"earth","scale":0.6}},
+{"say":"In space, the spine stretches out, and they can grow up to about five centimetres.","scene":{"type":"counter","from":0,"to":5,"format":"{:.0f}","suffix":" cm","label":"TALLER IN SPACE","sprite":"astronaut","scale":0.8}},
+{"say":"Back on Earth, they shrink again.","scene":{"type":"hero","sprite":"earth","title":"BACK ON EARTH...","scale":1.0}}]}

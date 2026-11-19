@@ -1,0 +1,74 @@
+{
+ "start": 642.5,
+ "end": 696.5,
+ "segments": [
+  {
+   "kind": "live",
+   "dur": 15.0
+  },
+  {
+   "kind": "cartoon",
+   "dur": 12.0,
+   "scene": {
+    "type": "exseq",
+    "title": "",
+    "phases": [
+     {
+      "move": "squat",
+      "dur": 2.5,
+      "label": "SQUATS"
+     },
+     {
+      "move": "deadlift",
+      "dur": 2.5,
+      "label": "DEADLIFTS"
+     },
+     {
+      "move": "bench",
+      "dur": 2.5,
+      "label": "BENCH PRESS"
+     },
+     {
+      "move": "machine",
+      "dur": 4.5,
+      "label": "VACUUM RESISTANCE"
+     }
+    ]
+   }
+  },
+  {
+   "kind": "live",
+   "dur": 15.0
+  },
+  {
+   "kind": "cartoon",
+   "dur": 12.0,
+   "scene": {
+    "type": "exseq",
+    "title": "",
+    "phases": [
+     {
+      "move": "bike",
+      "dur": 3,
+      "label": "BIKE"
+     },
+     {
+      "move": "treadmill",
+      "dur": 3,
+      "label": "TREADMILL"
+     },
+     {
+      "move": "broken",
+      "dur": 3,
+      "label": "BROKEN? WE FIX IT"
+     },
+     {
+      "move": "bike",
+      "dur": 3,
+      "label": "CARDIO"
+     }
+    ]
+   }
+  }
+ ]
+}

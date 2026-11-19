@@ -1,0 +1,18 @@
+{"voice": "am_michael", "speed": 1.12, "lines": [
+ {"say": "Which is harder to reach, the deepest ocean, or outer space?",
+  "scene": {"type": "hero", "sprite": "water", "title": "DEEP OCEAN OR SPACE?", "scale": 1.0}},
+ {"say": "Let's compare them.",
+  "scene": {"type": "versus", "vs": "VS", "left": {"sprite": "water", "label": "DEEP OCEAN", "scale": 0.8}, "right": {"sprite": "rocket", "label": "SPACE", "scale": 0.75}}},
+ {"say": "The deepest point of the ocean is about eleven thousand metres down.",
+  "scene": {"type": "counter", "from": 0, "to": 11000, "suffix": " m", "label": "DEEPEST OCEAN POINT", "sprite": "water", "scale": 0.9}},
+ {"say": "At that depth, the water pressure is about a thousand times the air pressure at sea level.",
+  "scene": {"type": "bigtext", "text": "1,000 TIMES THE PRESSURE", "sprite": "thermometer", "scale": 0.8}},
+ {"say": "Space begins about one hundred kilometres up.",
+  "scene": {"type": "counter", "from": 0, "to": 100, "suffix": " km", "label": "EDGE OF SPACE", "sprite": "satellite", "scale": 0.9}},
+ {"say": "Divers need a pressure-proof submarine. Astronauts need a sealed spacecraft.",
+  "scene": {"type": "bigtext", "text": "SEALED. ALWAYS SEALED.", "sprite": "check", "scale": 0.9}},
+ {"say": "So which is harder to reach? Both, in very different ways.",
+  "scene": {"type": "hero", "sprite": "rocket", "title": "SO WHICH IS HARDER?", "stamp": "BOTH!", "stamp_at": 0.5, "stamp_color": "yellow"}},
+ {"say": "Follow for more science.",
+  "scene": {"type": "outro"}}
+]}

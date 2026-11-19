@@ -1,0 +1,45 @@
+{
+ "voice": "am_michael",
+ "speed": 1.12,
+ "lines": [
+  {
+   "say": "The International Space Station sees a sunrise over and over.",
+   "scene": {
+    "type": "hero",
+    "sprite": "iss",
+    "title": "SUNRISES IN SPACE",
+    "scale": 0.9
+   }
+  },
+  {
+   "say": "It circles Earth about every ninety minutes.",
+   "scene": {
+    "type": "counter",
+    "from": 0,
+    "to": 90,
+    "suffix": " min",
+    "label": "ONE ORBIT",
+    "sprite": "clock",
+    "scale": 0.9
+   }
+  },
+  {
+   "say": "That means the crew sees around sixteen sunrises and sixteen sunsets every day.",
+   "scene": {
+    "type": "bigtext",
+    "text": "16 SUNRISES A DAY",
+    "sprite": "iss",
+    "scale": 0.9
+   }
+  },
+  {
+   "say": "Imagine waking up to that view every day.",
+   "scene": {
+    "type": "bigtext",
+    "text": "WAKE UP TO THAT",
+    "sprite": "star",
+    "scale": 0.7
+   }
+  }
+ ]
+}
